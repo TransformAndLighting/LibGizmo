@@ -330,11 +330,11 @@ void CGizmoTransformRotate::Draw()
         right.Cross(dir,up);
         right.Normalize();
 
-        static const tvector3 selectedColor(0xff / 255.0, 0xdc / 255.0, 0),
-                unitXColor(1, 0x41 / 255.0, 0x36 / 255.0),
-                unitYColor(0x2e / 255.0, 0xcc / 255.0, 0x40 / 255.0),
-                unitZColor(0, 0x74 / 255.0, 0xd9 / 255.0);
-        tvector3 axeX(1,0,0),axeY(0,1,0),axeZ(0,0,1);
+        static const tvector3 selectedColor(float(0xff) / 255.0f, float(0xdc) / 255.0f, 0.0f),
+                unitXColor(1.0f, float(0x41) / 255.0f, float(0x36) / 255.0f),
+                unitYColor(float(0x2e) / 255.0f, float(0xcc) / 255.0f, float(0x40) / 255.0f),
+                unitZColor(0.0f, float(0x74) / 255.0f, float(0xd9) / 255.0f);
+        tvector3 axeX(1.0f,0.0f,0.0f),axeY(0.0f,1.0f,0.0f),axeZ(0.0f,0.0f,1.0f);
 
 
         if (mLocation == LOCATE_LOCAL)

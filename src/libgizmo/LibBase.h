@@ -30,50 +30,49 @@
 #ifndef LIBBASE_H__
 #define LIBBASE_H__
 
+// platform
+/****************************************/
+#if defined(_WIN32)
+// Windows (32-bit and 64-bit)
+#define GIZMO_PLATFORM_WINDOWS 1
+#ifdef _WIN64
+// Windows (64-bit only)
+#define GIZMO_PLATFORM_WINDOWS_64 1
+#endif
+#elif defined(__APPLE__)
+#define GIZMO_PLATFORM_APPLE 1
+#include <TargetConditionals.h>
+#if TARGET_IPHONE_SIMULATOR
+#define GIZMO_PLATFORM_IOS_SIMULATOR 1
+#elif TARGET_OS_IPHONE
+#define GIZMO_PLATFORM_IOS 1
+#elif TARGET_OS_MAC
+#define GIZMO_PLATFORM_MAC_OS 1
+#else
+#error "Unknown Apple platform"
+#endif
+#elif defined(ANDROID) || defined(__ANDROID__)
+#define GIZMO_PLATFORM_ANDROID 1
+#elif defined(__EMSCRIPTEN__)
+#define GIZMO_PLATFORM_EMSCRIPTEN 1
+#elif defined(__linux__)
+#define GIZMO_PLATFORM_LINUX 1
+#elif defined(__unix__) // all unices not caught above
+#define GIZMO_PLATFORM_UNIX 1
+#elif defined(_POSIX_VERSION)
+#define GIZMO_PLATFORM_POSIX 1
+#else
+#error "LibGizmo: unknown platform"
+#endif
+
+#ifdef _MSC_VER
+#define GIZMO_MSVC 1
+#endif
+/****************************************/
+
 #include "ZBaseDefs.h"
 #include "ZBaseMaths.h"
 #include "ZCollisionsUtils.h"
 #include "ZMathsFunc.h"
 
-// platform
-/****************************************/
-#if defined(_WIN32)
-	// Windows (32-bit and 64-bit)
-	#define GIZMO_PLATFORM_WINDOWS 1
-	#ifdef _WIN64
-		// Windows (64-bit only)
-		#define GIZMO_PLATFORM_WINDOWS_64 1
-	#endif
-#elif defined(__APPLE__)
-	#define GIZMO_PLATFORM_APPLE 1
-	#include <TargetConditionals.h>
-	#if TARGET_IPHONE_SIMULATOR
-		#define GIZMO_PLATFORM_IOS_SIMULATOR 1
-	#elif TARGET_OS_IPHONE
-		#define GIZMO_PLATFORM_IOS 1
-	#elif TARGET_OS_MAC
-		#define GIZMO_PLATFORM_MAC_OS 1
-	#else
-		#error "Unknown Apple platform"
-	#endif
-#elif defined(ANDROID) || defined(__ANDROID__)
-	#define GIZMO_PLATFORM_ANDROID 1
-#elif defined(__EMSCRIPTEN__)
-	#define GIZMO_PLATFORM_EMSCRIPTEN 1
-#elif defined(__linux__)
-	#define GIZMO_PLATFORM_LINUX 1
-#elif defined(__unix__) // all unices not caught above
-	#define GIZMO_PLATFORM_UNIX 1
-#elif defined(_POSIX_VERSION)
-	#define GIZMO_PLATFORM_POSIX 1
-#else
-	#error "LibGizmo: unknown platform"
 #endif
-
-#ifdef _MSC_VER
-	#define GIZMO_MSVC 1
-#endif
-/****************************************/
-
-#endif
-

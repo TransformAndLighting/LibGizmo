@@ -31,6 +31,10 @@
 #ifndef GIZMOTRANSFORMRENDER_H__
 #define GIZMOTRANSFORMRENDER_H__
 
+#include "LibBase.h"
+
+#define GIZMO_USE_GL_GIZMO 0
+
 #ifdef GIZMO_ENABLE_QT
 #include <QOpenGLContext>
 #elif GIZMO_PLATFORM_APPLE
@@ -56,6 +60,8 @@
 	#define GL_GLEXT_PROTOTYPES 1
 	#include <SDL_opengles2.h>
 #else
+#undef  GIZMO_USE_GL_GIZMO
+#define GIZMO_USE_GL_GIZMO 1
 #include "gl_gizmo.h"
 #endif
 
@@ -85,13 +91,12 @@ private:
     static void Initialize();
     static void Terminate();
 
-    static GLuint m_Count;
+    static int    m_Count;
     static GLuint m_VertexBuffer;
     static GLuint m_Program;
-    static GLuint m_ColorUniform;
-    static GLuint m_ModelviewMatrixUniform;
-    static GLuint m_ProjectionMatrixUniform;
-    static GLuint m_ProjectionMatrixUniform;
+    static GLint  m_ColorUniform;
+    static GLint  m_ModelviewMatrixUniform;
+    static GLint  m_ProjectionMatrixUniform;
 };
 
 #endif // !defined(AFX_GIZMOTRANSFORMRENDER_H__549F6E7A_D46D_4B18_9E74_76B7E43A3841__INCLUDED_)

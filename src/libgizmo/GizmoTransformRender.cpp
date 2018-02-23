@@ -30,19 +30,21 @@
 #include <stdio.h>
 #endif
 
-#include "stdafx.h"
 #include "GizmoTransformRender.h"
+#include "IGizmo.h"
 
-#if (defined(GIZMO_ENABLE_QT) || (GIZMO_PLATFORM_APPLE || GIZMO_PLATFORM_ANDROID || GIZMO_PLATFORM_EMSCRIPTEN))
+#if GIZMO_USE_GL_GIZMO
+#include "gl_gizmo.c"
+#else
 #define gizmo_ogl_LoadFunctions()
 #endif
 
-static GLuint CGizmoTransformRender::m_Count                   =  0;
-static GLuint CGizmoTransformRender::m_VertexBuffer            =  0;
-static GLuint CGizmoTransformRender::m_Program                 =  0;
-static GLuint CGizmoTransformRender::m_ColorUniform            = -1;
-static GLuint CGizmoTransformRender::m_ModelviewMatrixUniform  = -1;
-static GLuint CGizmoTransformRender::m_ProjectionMatrixUniform = -1;
+int    CGizmoTransformRender::m_Count                   =  0;
+GLuint CGizmoTransformRender::m_VertexBuffer            =  0;
+GLuint CGizmoTransformRender::m_Program                 =  0;
+GLint  CGizmoTransformRender::m_ColorUniform            = -1;
+GLint  CGizmoTransformRender::m_ModelviewMatrixUniform  = -1;
+GLint  CGizmoTransformRender::m_ProjectionMatrixUniform = -1;
 
 static void AttachShader(const char *source, GLenum type, GLuint program)
 {
@@ -69,27 +71,12 @@ static void AttachShader(const char *source, GLenum type, GLuint program)
 }
 
 CGizmoTransformRender::CGizmoTransformRender()
-    /*
-    : m_Program(0),
-      m_ColorUniform(0),
-      m_ModelviewMatrixUniform(0),
-      m_ProjectionMatrixUniform(0)
-    */
 {
     Initialize();
 }
 
 CGizmoTransformRender::~CGizmoTransformRender()
 {
-    /*
-    m_ColorUniform = 0;
-    m_ModelviewMatrixUniform = 0;
-    m_ProjectionMatrixUniform = 0;
-    if (m_Program) {
-        glDeleteProgram(m_Program);
-        m_Program = 0;
-    }
-    */
     Terminate();
 }
 
@@ -267,7 +254,7 @@ void CGizmoTransformRender::DrawCamem(const tvector3 &orig, const tvector3 &vtx,
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
     ActivateProgram();
-    glUniform4f(m_ColorUniform, 0xf0 / 255.0, 0x12 / 255.0, 0xbe / 255.0, 0.5);
+    glUniform4f(m_ColorUniform, float(0xf0) / 255.0f, float(0x12) / 255.0f, float(0xbe) / 255.0f, 0.5f);
     glBufferSubData(GL_ARRAY_BUFFER, 0, GLsizeiptr(sizeof(vertices)), vertices);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), 0);
     glDrawArrays(GL_TRIANGLE_FAN, 0, j);
@@ -281,7 +268,7 @@ void CGizmoTransformRender::DrawCamem(const tvector3 &orig, const tvector3 &vtx,
         vertices[j++] = vt;
     }
     glDisable(GL_BLEND);
-    glUniform4f(m_Program, 1, 1, 0.2, 1);
+    glUniform4f(m_Program, 1.0f, 1.0f, 0.2f, 1.0f);
     glBufferSubData(GL_ARRAY_BUFFER, 0, GLsizeiptr(sizeof(vertices)), vertices);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), 0);
     glDrawArrays(GL_LINE_LOOP, 0, j);

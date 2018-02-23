@@ -165,7 +165,7 @@ void CGizmoTransformMove::OnMouseMove(unsigned int x, unsigned int y)
         case MOVE_Y:	df = tvector3(0,df.Dot(axeY), 0);							break;
         case MOVE_XYZ:
         case MOVE_NONE:
-        defaut: break;
+        default: break;
         }
 
         tvector3 adf;
@@ -237,10 +237,10 @@ void CGizmoTransformMove::Draw()
         axeY*=GetScreenFactor();
         axeZ*=GetScreenFactor();
 
-        static const tvector3 selectedColor(0xff / 255.0, 0xdc / 255.0, 0),
-                unitXColor(1, 0x41 / 255.0, 0x36 / 255.0),
-                unitYColor(0x2e / 255.0, 0xcc / 255.0, 0x40 / 255.0),
-                unitZColor(0, 0x74 / 255.0, 0xd9 / 255.0);
+        static const tvector3 selectedColor(float(0xff) / 255.0f, float(0xdc) / 255.0f, 0.0f),
+                unitXColor(1.0f, float(0x41) / 255.0f, float(0x36) / 255.0f),
+                unitYColor(float(0x2e) / 255.0f, float(0xcc) / 255.0f, float(0x40) / 255.0f),
+                unitZColor(0.0f, float(0x74) / 255.0f, float(0xd9) / 255.0f);
 
         // plan1
         if (m_MoveTypePredict != MOVE_X) DrawAxis(orig,axeX,axeY,axeZ,0.05f,0.83f,unitXColor);

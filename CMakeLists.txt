@@ -22,9 +22,6 @@ set(LIBGIZMO_SOURCES_CORE
     ${libgizmo_sources_base_dir}/ZCollisionsUtils.h
     ${libgizmo_sources_base_dir}/ZMathsFunc.cpp
     ${libgizmo_sources_base_dir}/ZMathsFunc.h
-    ${libgizmo_sources_base_dir}/stdafx.h
-    ${libgizmo_sources_glloadgen_dir}/gl_gizmo.c
-    ${libgizmo_sources_glloadgen_dir}/gl_gizmo.h
 )
 
 add_library(${PROJECT_NAME} ${LIBGIZMO_SOURCES_CORE})
