@@ -85,5 +85,7 @@ IGizmo *CreateMoveGizmo();
 IGizmo *CreateRotateGizmo();
 IGizmo *CreateScaleGizmo();
 
+// Destroy gizmo
+bool DestroyGizmo(IGizmo *gizmo)
 
 #endif

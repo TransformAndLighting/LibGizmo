@@ -206,11 +206,9 @@ void CGizmoTransformMove::OnMouseUp(unsigned int x, unsigned int y)
 
 void CGizmoTransformMove::Draw()
 {
-    ComputeScreenFactor();
-
-    Initialize();
     if (m_pMatrix)
     {
+        ComputeScreenFactor();
 
         //glDisable(GL_DEPTH_TEST);
         tvector3 orig = GetTranslation();

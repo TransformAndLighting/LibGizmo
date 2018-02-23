@@ -299,8 +299,6 @@ void CGizmoTransformRotate::Draw()
 {
     if (m_pMatrix)
     {
-
-        Initialize();
         ComputeScreenFactor();
 
         tvector3 right,up,frnt,dir;
