@@ -24,8 +24,11 @@ set(LIBGIZMO_SOURCES_CORE
     ${libgizmo_sources_base_dir}/ZMathsFunc.h
 )
 
-add_library(${PROJECT_NAME} ${LIBGIZMO_SOURCES_CORE})
+add_library(${PROJECT_NAME} STATIC ${LIBGIZMO_SOURCES_CORE})
 include_directories(${libgizmo_sources_glloadgen_dir})
+
+set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX "d")
+set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX "d")
 
 find_package(OpenGL REQUIRED)
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/inc" ${OPENGL_INCLUDE_DIR})
@@ -37,3 +40,12 @@ if(EXAMPLE_GLFW)
   find_library(GLFW_LIBRARY glfw)
   target_link_libraries(gizmo_glfw ${GLFW_LIBRARY} ${PROJECT_NAME})
 endif()
+
+INSTALL(TARGETS ${PROJECT_NAME}
+	RUNTIME DESTINATION bin
+	LIBRARY DESTINATION lib
+	ARCHIVE DESTINATION lib)
+
+INSTALL(FILES
+	${CMAKE_CURRENT_SOURCE_DIR}/inc/IGizmo.h
+	DESTINATION include/LibGizmo)
