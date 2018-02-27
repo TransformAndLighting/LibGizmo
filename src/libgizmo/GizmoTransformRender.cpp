@@ -86,6 +86,7 @@ void CGizmoTransformRender::Initialize()
         gizmo_ogl_LoadFunctions();
         m_Program = glCreateProgram();
         static const char vertexShader[] = ""
+                "precision highp float;\n"
                 "#if __VERSION__ < 130\n"
                 "#define in attribute\n"
                 "#define out varying\n"
@@ -101,6 +102,7 @@ void CGizmoTransformRender::Initialize()
                 "}\n";
         AttachShader(vertexShader, GL_VERTEX_SHADER, m_Program);
         static const char fragmentShader[] = ""
+                "precision highp float;\n"
                 "#if __VERSION__ < 130\n"
                 "#define in varying\n"
                 "#define outPixelColor gl_FragColor\n"
