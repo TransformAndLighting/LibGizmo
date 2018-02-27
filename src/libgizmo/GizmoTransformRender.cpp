@@ -282,10 +282,11 @@ void CGizmoTransformRender::DrawCamem(const tvector3 &orig, const tvector3 &vtx,
 void CGizmoTransformRender::DrawQuad(const tvector3 &orig, float size, bool bSelected, const tvector3 &axisU, const tvector3 &axisV)
 {
     tvector3 pts[4];
-    pts[0] = orig;
+	tvector3 tmp;
+	pts[0] = orig;
     pts[1] = orig + (axisU * size);
-    pts[2] = orig + (axisU + axisV)*size;
-    pts[3] = orig + (axisV * size);
+	pts[2] = orig + (axisV * size);
+	pts[3] = orig + (axisU + axisV)*size;
     glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
@@ -298,13 +299,16 @@ void CGizmoTransformRender::DrawQuad(const tvector3 &orig, float size, bool bSel
     }
     glBufferSubData(GL_ARRAY_BUFFER, 0, GLsizeiptr(sizeof(pts)), pts);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(pts[0]), pts);
-    glDrawArrays(GL_QUADS, 0, sizeof(pts) / sizeof(pts[0]));
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, sizeof(pts) / sizeof(pts[0]));
     if (!bSelected) {
         glUniform4f(m_ColorUniform, 1, 1, 0.2f, 1);
     }
     else {
         glUniform4f(m_ColorUniform, 1, 1, 1, 0.6f);
     }
+    tmp    = pts[2];
+    pts[2] = pts[3];
+    pts[3] = tmp;
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(pts[0]), pts);
     glDrawArrays(GL_LINE_STRIP, 0, sizeof(pts) / sizeof(pts[0]));
     DeactivateProgram();

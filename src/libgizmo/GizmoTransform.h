@@ -43,6 +43,7 @@ public:
           m_ScreenFactor(1),
           m_bUseSnap(false),
           mDisplayScale(1),
+          mLocation(LOCATE_LOCAL),
           mEditPos(0),
           mEditScale(0),
           mEditQT(0),

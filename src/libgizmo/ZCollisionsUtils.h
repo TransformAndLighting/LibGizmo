@@ -117,7 +117,7 @@ inline bool HitBoundingBox(float *minB, float *maxB, float *origin, float *dir,f
 {
 	char inside = true;
 	char quadrant[NUMDIM];
-	register int i;
+	/* register */ int i;
 	int whichPlane;
 	float maxT[NUMDIM];
 	float candidatePlane[NUMDIM];
