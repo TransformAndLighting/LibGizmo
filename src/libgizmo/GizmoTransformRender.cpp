@@ -194,7 +194,7 @@ void CGizmoTransformRender::DrawCircleHalf(const tvector3 &orig, const tvector3 
     //glDisable(GL_DEPTH_TEST);
     glUniform4f(m_ColorUniform, color.x, color.y, color.z, 1);
     glBufferSubData(GL_ARRAY_BUFFER, 0, GLsizeiptr(sizeof(vertices)), vertices);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), vertices);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), 0);
     glDrawArrays(GL_LINE_STRIP, 0, j);
     //glEnable(GL_DEPTH_TEST);
 }
@@ -282,7 +282,7 @@ void CGizmoTransformRender::DrawQuad(const tvector3 &orig, float size, bool bSel
         glUniform4f(m_ColorUniform, 1, 1, 1, 0.6f);
     }
     glBufferSubData(GL_ARRAY_BUFFER, 0, GLsizeiptr(sizeof(pts)), pts);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(pts[0]), pts);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(pts[0]), 0);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, sizeof(pts) / sizeof(pts[0]));
     if (!bSelected) {
         glUniform4f(m_ColorUniform, 1, 1, 0.2f, 1);
@@ -293,7 +293,7 @@ void CGizmoTransformRender::DrawQuad(const tvector3 &orig, float size, bool bSel
     tmp    = pts[2];
     pts[2] = pts[3];
     pts[3] = tmp;
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(pts[0]), pts);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(pts[0]), 0);
     glDrawArrays(GL_LINE_STRIP, 0, sizeof(pts) / sizeof(pts[0]));
     //glEnable(GL_DEPTH_TEST);
     //glEnable(GL_CULL_FACE);
@@ -319,7 +319,7 @@ void CGizmoTransformRender::DrawTri(const tvector3 &orig, float size, bool bSele
         glUniform4f(m_ColorUniform, 1, 1, 1, 0.6f);
     }
     glBufferSubData(GL_ARRAY_BUFFER, 0, GLsizeiptr(sizeof(pts)), pts);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(pts[0]), pts);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(pts[0]), 0);
     glDrawArrays(GL_TRIANGLES, 0, sizeof(pts) / sizeof(pts[0]));
     if (!bSelected) {
         glUniform4f(m_ColorUniform, 1, 1, 0.2f, 1);
@@ -327,7 +327,7 @@ void CGizmoTransformRender::DrawTri(const tvector3 &orig, float size, bool bSele
     else {
         glUniform4f(m_ColorUniform, 1, 1, 1, 0.6f);
     }
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(pts[0]), pts);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(pts[0]), 0);
     glDrawArrays(GL_LINE_STRIP, 0, sizeof(pts) / sizeof(pts[0]));
     //glEnable(GL_DEPTH_TEST);
     //glEnable(GL_CULL_FACE);
