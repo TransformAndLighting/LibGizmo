@@ -297,8 +297,8 @@ void CGizmoTransformRender::DrawQuad(const tvector3 &orig, float size, bool bSel
     tmp    = pts[2];
     pts[2] = pts[3];
     pts[3] = tmp;
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(pts[0]), 0);
-    glDrawArrays(GL_LINE_STRIP, 0, sizeof(pts) / sizeof(pts[0]));
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(pts[0]), 0);
+    glDrawArrays(GL_LINE_LOOP, 0, sizeof(pts) / sizeof(pts[0]));
     glDisable(GL_BLEND);
     //glEnable(GL_DEPTH_TEST);
     //glEnable(GL_CULL_FACE);
@@ -335,7 +335,7 @@ void CGizmoTransformRender::DrawTri(const tvector3 &orig, float size, bool bSele
         glUniform4f(m_ColorUniform, 1, 1, 1, 0.6f);
     }
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(pts[0]), 0);
-    glDrawArrays(GL_LINE_STRIP, 0, sizeof(pts) / sizeof(pts[0]));
+    glDrawArrays(GL_LINE_LOOP, 0, sizeof(pts) / sizeof(pts[0]));
     glDisable(GL_BLEND);
     //glEnable(GL_DEPTH_TEST);
     //glEnable(GL_CULL_FACE);
