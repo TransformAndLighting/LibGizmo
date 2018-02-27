@@ -202,7 +202,7 @@ void CGizmoTransformRender::DrawCircleHalf(const tvector3 &orig, const tvector3 
 void CGizmoTransformRender::DrawAxis(const tvector3 &orig, const tvector3 &axis, const tvector3 &vtx, const tvector3 &vty, float fct, float fct2, const tvector3 &col)
 {
     tvector3 vertices1[2] = { orig, orig + axis };
-    tvector3 vertices2[62];
+    tvector3 vertices2[3 * 31];
     int j = 0;
     for (int i = 0; i <= 30; i++) {
         tvector3 pt;
@@ -210,6 +210,7 @@ void CGizmoTransformRender::DrawAxis(const tvector3 &orig, const tvector3 &axis,
         pt += vty * sin(((2 * ZPI) / 30.0f) * i) * fct;
         pt += axis * fct2;
         pt += orig;
+        vertices2[j++] = pt;
         pt  = vtx * cos(((2 * ZPI) / 30.0f) * (i + 1)) * fct;
         pt += vty * sin(((2 * ZPI) / 30.0f) * (i + 1)) * fct;
         pt += axis * fct2;
@@ -242,6 +243,8 @@ void CGizmoTransformRender::DrawCamem(const tvector3 &orig, const tvector3 &vtx,
     }
     //glDisable(GL_DEPTH_TEST);
     //glDisable(GL_CULL_FACE);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glUniform4f(m_ColorUniform, float(0xf0) / 255.0f, float(0x12) / 255.0f, float(0xbe) / 255.0f, 0.5f);
     glBufferSubData(GL_ARRAY_BUFFER, 0, GLsizeiptr(sizeof(vertices)), vertices);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), 0);
@@ -255,26 +258,27 @@ void CGizmoTransformRender::DrawCamem(const tvector3 &orig, const tvector3 &vtx,
         vt += orig;
         vertices[j++] = vt;
     }
-    //glDisable(GL_BLEND);
-    glUniform4f(m_Program, 1.0f, 1.0f, 0.2f, 1.0f);
+    glDisable(GL_BLEND);
+    glUniform4f(m_ColorUniform, 1.0f, 1.0f, 0.2f, 1.0f);
     glBufferSubData(GL_ARRAY_BUFFER, 0, GLsizeiptr(sizeof(vertices)), vertices);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), 0);
     glDrawArrays(GL_LINE_LOOP, 0, j);
     //glEnable(GL_DEPTH_TEST);
     //glEnable(GL_CULL_FACE);
-    //glEnable(GL_BLEND);
 }
 
 void CGizmoTransformRender::DrawQuad(const tvector3 &orig, float size, bool bSelected, const tvector3 &axisU, const tvector3 &axisV)
 {
     tvector3 pts[4];
-	tvector3 tmp;
-	pts[0] = orig;
+    tvector3 tmp;
+    pts[0] = orig;
     pts[1] = orig + (axisU * size);
-	pts[2] = orig + (axisV * size);
-	pts[3] = orig + (axisU + axisV)*size;
+    pts[2] = orig + (axisV * size);
+    pts[3] = orig + (axisU + axisV)*size;
     //glDisable(GL_DEPTH_TEST);
     //glDisable(GL_CULL_FACE);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     if (!bSelected) {
         glUniform4f(m_ColorUniform, 1, 1, 0, 0.5f);
     }
@@ -295,6 +299,7 @@ void CGizmoTransformRender::DrawQuad(const tvector3 &orig, float size, bool bSel
     pts[3] = tmp;
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(pts[0]), 0);
     glDrawArrays(GL_LINE_STRIP, 0, sizeof(pts) / sizeof(pts[0]));
+    glDisable(GL_BLEND);
     //glEnable(GL_DEPTH_TEST);
     //glEnable(GL_CULL_FACE);
 }
@@ -312,6 +317,8 @@ void CGizmoTransformRender::DrawTri(const tvector3 &orig, float size, bool bSele
     pts[2] += orig;
     //glDisable(GL_DEPTH_TEST);
     //glDisable(GL_CULL_FACE);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     if (!bSelected) {
         glUniform4f(m_ColorUniform, 1, 1, 0, 0.5f);
     }
@@ -329,6 +336,7 @@ void CGizmoTransformRender::DrawTri(const tvector3 &orig, float size, bool bSele
     }
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(pts[0]), 0);
     glDrawArrays(GL_LINE_STRIP, 0, sizeof(pts) / sizeof(pts[0]));
+    glDisable(GL_BLEND);
     //glEnable(GL_DEPTH_TEST);
     //glEnable(GL_CULL_FACE);
 }
@@ -344,8 +352,8 @@ void CGizmoTransformRender::BeginDraw()
 
 void CGizmoTransformRender::EndDraw()
 {
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glDisableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glDisableVertexAttribArray(0);
     glUseProgram(0);
 }
 
