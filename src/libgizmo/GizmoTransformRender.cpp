@@ -168,16 +168,12 @@ void CGizmoTransformRender::DrawCircle(const tvector3 &orig, const tvector3 &col
         vt += orig;
         vertices[i] = vt;
     }
-    glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
-    glDisable(GL_DEPTH_TEST);
-    ActivateProgram();
+    //glDisable(GL_DEPTH_TEST);
     glUniform4f(m_ColorUniform, color.x, color.y, color.z, 1);
     glBufferSubData(GL_ARRAY_BUFFER, 0, GLsizeiptr(sizeof(vertices)), vertices);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), 0);
     glDrawArrays(GL_LINE_LOOP, 0, size);
-    DeactivateProgram();
-    glEnable(GL_DEPTH_TEST);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    //glEnable(GL_DEPTH_TEST);
 }
 
 
@@ -195,16 +191,12 @@ void CGizmoTransformRender::DrawCircleHalf(const tvector3 &orig, const tvector3 
             vertices[j++] = vt;
         }
     }
-    glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
-    glDisable(GL_DEPTH_TEST);
-    ActivateProgram();
+    //glDisable(GL_DEPTH_TEST);
     glUniform4f(m_ColorUniform, color.x, color.y, color.z, 1);
     glBufferSubData(GL_ARRAY_BUFFER, 0, GLsizeiptr(sizeof(vertices)), vertices);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), vertices);
     glDrawArrays(GL_LINE_STRIP, 0, j);
-    DeactivateProgram();
-    glEnable(GL_DEPTH_TEST);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    //glEnable(GL_DEPTH_TEST);
 }
 
 void CGizmoTransformRender::DrawAxis(const tvector3 &orig, const tvector3 &axis, const tvector3 &vtx, const tvector3 &vty, float fct, float fct2, const tvector3 &col)
@@ -225,9 +217,7 @@ void CGizmoTransformRender::DrawAxis(const tvector3 &orig, const tvector3 &axis,
         vertices2[j++] = pt;
         vertices2[j++] = orig + axis;
     }
-    glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
-    glDisable(GL_DEPTH_TEST);
-    ActivateProgram();
+    //glDisable(GL_DEPTH_TEST);
     glUniform4f(m_ColorUniform, col.x, col.y, col.z, 1);
     glBufferSubData(GL_ARRAY_BUFFER, 0, GLsizeiptr(sizeof(vertices1)), vertices1);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertices1[0]), 0);
@@ -235,9 +225,7 @@ void CGizmoTransformRender::DrawAxis(const tvector3 &orig, const tvector3 &axis,
     glBufferSubData(GL_ARRAY_BUFFER, 0, GLsizeiptr(sizeof(vertices2)), vertices2);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertices2[0]), 0);
     glDrawArrays(GL_TRIANGLE_FAN, 0, j);
-    DeactivateProgram();
-    glEnable(GL_DEPTH_TEST);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    //glEnable(GL_DEPTH_TEST);
 }
 
 void CGizmoTransformRender::DrawCamem(const tvector3 &orig, const tvector3 &vtx, const tvector3 &vty, float ng)
@@ -252,10 +240,8 @@ void CGizmoTransformRender::DrawCamem(const tvector3 &orig, const tvector3 &vtx,
         vt += orig;
         vertices[j++] = vt;
     }
-    glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
-    glDisable(GL_DEPTH_TEST);
-    glDisable(GL_CULL_FACE);
-    ActivateProgram();
+    //glDisable(GL_DEPTH_TEST);
+    //glDisable(GL_CULL_FACE);
     glUniform4f(m_ColorUniform, float(0xf0) / 255.0f, float(0x12) / 255.0f, float(0xbe) / 255.0f, 0.5f);
     glBufferSubData(GL_ARRAY_BUFFER, 0, GLsizeiptr(sizeof(vertices)), vertices);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), 0);
@@ -269,16 +255,14 @@ void CGizmoTransformRender::DrawCamem(const tvector3 &orig, const tvector3 &vtx,
         vt += orig;
         vertices[j++] = vt;
     }
-    glDisable(GL_BLEND);
+    //glDisable(GL_BLEND);
     glUniform4f(m_Program, 1.0f, 1.0f, 0.2f, 1.0f);
     glBufferSubData(GL_ARRAY_BUFFER, 0, GLsizeiptr(sizeof(vertices)), vertices);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertices[0]), 0);
     glDrawArrays(GL_LINE_LOOP, 0, j);
-    DeactivateProgram();
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-    glEnable(GL_BLEND);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    //glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_CULL_FACE);
+    //glEnable(GL_BLEND);
 }
 
 void CGizmoTransformRender::DrawQuad(const tvector3 &orig, float size, bool bSelected, const tvector3 &axisU, const tvector3 &axisV)
@@ -289,10 +273,8 @@ void CGizmoTransformRender::DrawQuad(const tvector3 &orig, float size, bool bSel
     pts[1] = orig + (axisU * size);
 	pts[2] = orig + (axisV * size);
 	pts[3] = orig + (axisU + axisV)*size;
-    glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
-    glDisable(GL_DEPTH_TEST);
-    glDisable(GL_CULL_FACE);
-    ActivateProgram();
+    //glDisable(GL_DEPTH_TEST);
+    //glDisable(GL_CULL_FACE);
     if (!bSelected) {
         glUniform4f(m_ColorUniform, 1, 1, 0, 0.5f);
     }
@@ -313,10 +295,8 @@ void CGizmoTransformRender::DrawQuad(const tvector3 &orig, float size, bool bSel
     pts[3] = tmp;
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(pts[0]), pts);
     glDrawArrays(GL_LINE_STRIP, 0, sizeof(pts) / sizeof(pts[0]));
-    DeactivateProgram();
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    //glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_CULL_FACE);
 }
 
 
@@ -330,10 +310,8 @@ void CGizmoTransformRender::DrawTri(const tvector3 &orig, float size, bool bSele
     pts[2] *= size;
     pts[1] += orig;
     pts[2] += orig;
-    glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
-    glDisable(GL_DEPTH_TEST);
-    glDisable(GL_CULL_FACE);
-    ActivateProgram();
+    //glDisable(GL_DEPTH_TEST);
+    //glDisable(GL_CULL_FACE);
     if (!bSelected) {
         glUniform4f(m_ColorUniform, 1, 1, 0, 0.5f);
     }
@@ -351,23 +329,23 @@ void CGizmoTransformRender::DrawTri(const tvector3 &orig, float size, bool bSele
     }
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(pts[0]), pts);
     glDrawArrays(GL_LINE_STRIP, 0, sizeof(pts) / sizeof(pts[0]));
-    DeactivateProgram();
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    //glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_CULL_FACE);
 }
 
-void CGizmoTransformRender::ActivateProgram()
+void CGizmoTransformRender::BeginDraw()
 {
     glUseProgram(m_Program);
     glUniformMatrix4fv(m_ModelviewMatrixUniform, 1, GL_FALSE, m_Model);
     glUniformMatrix4fv(m_ProjectionMatrixUniform, 1, GL_FALSE, m_Proj);
     glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
 }
 
-void CGizmoTransformRender::DeactivateProgram()
+void CGizmoTransformRender::EndDraw()
 {
-    glDisableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glDisableVertexAttribArray(0);
     glUseProgram(0);
 }
 

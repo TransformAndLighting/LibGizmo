@@ -227,7 +227,7 @@ void CGizmoTransformMove::Draw()
         }
 
 
-
+		BeginDraw();
 
         DrawQuad(orig, 0.5f*GetScreenFactor(), (m_MoveTypePredict == MOVE_XZ), axeX, axeZ);
         DrawQuad(orig, 0.5f*GetScreenFactor(), (m_MoveTypePredict == MOVE_XY), axeX, axeY);
@@ -236,6 +236,8 @@ void CGizmoTransformMove::Draw()
         axeX*=GetScreenFactor();
         axeY*=GetScreenFactor();
         axeZ*=GetScreenFactor();
+		EndDraw();
+		return;
 
         static const tvector3 selectedColor(float(0xff) / 255.0f, float(0xdc) / 255.0f, 0.0f),
                 unitXColor(1.0f, float(0x41) / 255.0f, float(0x36) / 255.0f),
@@ -253,6 +255,8 @@ void CGizmoTransformMove::Draw()
         //plan3
         if (m_MoveTypePredict != MOVE_Z) DrawAxis(orig,axeZ,axeX,axeY, 0.05f,0.83f,unitZColor);
             else DrawAxis(orig,axeZ,axeX,axeY, 0.05f,0.83f,selectedColor);
+
+        EndDraw();
     }
 }
 

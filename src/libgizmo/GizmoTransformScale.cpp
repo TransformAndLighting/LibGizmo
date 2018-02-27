@@ -275,6 +275,8 @@ void CGizmoTransformScale::Draw()
             axeZ.Normalize();
         }
 
+        BeginDraw();
+
         DrawTri(orig, 0.5f*GetScreenFactor(),((m_ScaleTypePredict==SCALE_XZ)||(m_ScaleTypePredict==SCALE_XYZ)), axeX, axeZ);
         DrawTri(orig, 0.5f*GetScreenFactor(),((m_ScaleTypePredict==SCALE_XY)||(m_ScaleTypePredict==SCALE_XYZ)), axeX, axeY);
         DrawTri(orig, 0.5f*GetScreenFactor(),((m_ScaleTypePredict==SCALE_YZ)||(m_ScaleTypePredict==SCALE_XYZ)), axeY, axeZ);
@@ -301,6 +303,8 @@ void CGizmoTransformScale::Draw()
             DrawAxis(orig,axeZ,axeX,axeY,0.05f,0.83f,vector4(0,0,1,1));
         else
             DrawAxis(orig,axeZ,axeX,axeY,0.05f,0.83f,vector4(1,1,1,1));
+
+        EndDraw();
 
 /*
         // debug

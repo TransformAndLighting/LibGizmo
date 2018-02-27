@@ -84,9 +84,10 @@ public:
 protected:
     tmatrix m_Model,m_Proj;
 
+    void BeginDraw();
+    void EndDraw();
+
 private:
-    void ActivateProgram();
-    void DeactivateProgram();
 
     static void Initialize();
     static void Terminate();

@@ -347,6 +347,8 @@ void CGizmoTransformRotate::Draw()
             axeZ.Normalize();
         }
 
+        BeginDraw();
+
         // Twin
         if (mMask&AXIS_TRACKBALL)
         {
@@ -415,9 +417,9 @@ void CGizmoTransformRotate::Draw()
         // camembert
         if ( (m_RotateType != ROTATE_NONE) && (m_RotateType != ROTATE_TWIN ) )
             DrawCamem(orig,m_Vtx*GetScreenFactor(),m_Vty*GetScreenFactor(),-m_Ng2);
+
+        EndDraw();
     }
-
-
 }
 
 void CGizmoTransformRotate::ApplyTransform(tvector3& trans, bool bAbsolute)
