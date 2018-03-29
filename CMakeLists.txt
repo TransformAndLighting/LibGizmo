@@ -2,7 +2,10 @@ cmake_minimum_required(VERSION 3.1)
 project(gizmo)
 
 set(libgizmo_sources_base_dir "${CMAKE_CURRENT_SOURCE_DIR}/src/libgizmo")
-# set(libgizmo_sources_glloadgen_dir "${CMAKE_CURRENT_SOURCE_DIR}/src/glloadgen")
+
+if(WIN32)
+	set(libgizmo_sources_glloadgen_dir "${CMAKE_CURRENT_SOURCE_DIR}/src/glloadgen")
+endif()
 
 set(LIBGIZMO_SOURCES_CORE
     ${CMAKE_CURRENT_SOURCE_DIR}/inc/IGizmo.h
@@ -26,13 +29,18 @@ set(LIBGIZMO_SOURCES_CORE
 )
 
 add_library(${PROJECT_NAME} STATIC ${LIBGIZMO_SOURCES_CORE})
-# include_directories(${libgizmo_sources_glloadgen_dir})
+
+if(WIN32)
+	include_directories(${libgizmo_sources_glloadgen_dir})
+endif()
 
 set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX "d")
 
-find_package(OpenGL REQUIRED)
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/inc" ${OPENGL_INCLUDE_DIR})
-target_link_libraries(${PROJECT_NAME} ${OPENGL_gl_LIBRARY})
+if(WIN32)
+	find_package(OpenGL REQUIRED)
+	include_directories("${CMAKE_CURRENT_SOURCE_DIR}/inc" ${OPENGL_INCLUDE_DIR})
+	target_link_libraries(${PROJECT_NAME} ${OPENGL_gl_LIBRARY})
+endif()
 
 if(EXAMPLE_GLFW)
   set(LIBGIZMO_SOURCES_EXAMPLE_GLFW ${CMAKE_CURRENT_SOURCE_DIR}/src/glfw/main.cpp)
