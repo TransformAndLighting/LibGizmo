@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.1)
 project(gizmo)
 
 set(libgizmo_sources_base_dir "${CMAKE_CURRENT_SOURCE_DIR}/src/libgizmo")
-set(libgizmo_sources_glloadgen_dir "${CMAKE_CURRENT_SOURCE_DIR}/src/glloadgen")
+# set(libgizmo_sources_glloadgen_dir "${CMAKE_CURRENT_SOURCE_DIR}/src/glloadgen")
+
 set(LIBGIZMO_SOURCES_CORE
     ${CMAKE_CURRENT_SOURCE_DIR}/inc/IGizmo.h
     ${libgizmo_sources_base_dir}/GizmoTransform.h
@@ -25,7 +26,7 @@ set(LIBGIZMO_SOURCES_CORE
 )
 
 add_library(${PROJECT_NAME} STATIC ${LIBGIZMO_SOURCES_CORE})
-include_directories(${libgizmo_sources_glloadgen_dir})
+# include_directories(${libgizmo_sources_glloadgen_dir})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX "d")
 
