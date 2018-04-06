@@ -31,7 +31,15 @@ add_library(${PROJECT_NAME} STATIC ${LIBGIZMO_SOURCES_CORE})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/inc)
 include_directories(${libgizmo_sources_glloadgen_dir})
 
-set_target_properties(${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX "d")
+if(APPLE)
+	LIST(APPEND LIBGIZMO_CFLAGS -fvisibility=hidden)
+	if(IOS)
+		LIST(APPEND LIBGIZMO_CFLAGS -fembed-bitcode)
+	endif(IOS)
+	target_compile_options(${PROJECT_NAME} PUBLIC ${LIBGIZMO_CFLAGS})
+endif()
+
+set_target_properties (${PROJECT_NAME} PROPERTIES DEBUG_POSTFIX "d")
 
 # if(WIN32)
 # 	find_package(OpenGL REQUIRED)
