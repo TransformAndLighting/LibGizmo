@@ -142,11 +142,13 @@ public:
     }
     void ComputeScreenFactor()
     {
-        tmatrix viewproj = m_Model * m_Proj;
-
-        tvector4 trf = vector4( m_pMatrix->V4.position.x, m_pMatrix->V4.position.y, m_pMatrix->V4.position.z, 1.f);
+        const tmatrix viewproj = m_Model * m_Proj;
+        //tvector4 trf = vector4( m_pMatrix->V4.position.x, m_pMatrix->V4.position.y, m_pMatrix->V4.position.z, 1.f);
+        const tvector3 pos = GetTranslation();
+        tvector4       trf = vector4(pos.x, pos.y, pos.z, 1.0f);
         trf.Transform( viewproj );
-        m_ScreenFactor = mDisplayScale * 0.15f * trf.w;
+        const float w = ((trf.w < 0.0f) ? (-trf.w) : (trf.w));
+        m_ScreenFactor = mDisplayScale * 0.15f * w;
     }
 
     tplane m_plan;
