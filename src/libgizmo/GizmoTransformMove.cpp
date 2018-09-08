@@ -241,7 +241,8 @@ void CGizmoTransformMove::Draw()
                 unitYColor(float(0x2e) / 255.0f, float(0xcc) / 255.0f, float(0x40) / 255.0f),
                 unitZColor(0.0f, float(0x74) / 255.0f, float(0xd9) / 255.0f);
 
-        const float tfct2 = 0.02f*GetScreenFactor(); // 0.83
+		//const float tfct2 = 0.02f*GetScreenFactor(); // 0.83
+		const float tfct2 = 0.83f;
 
         // plan1
         if (m_MoveTypePredict != MOVE_X) DrawAxis(orig,axeX,axeY,axeZ,0.05f,tfct2,unitXColor);

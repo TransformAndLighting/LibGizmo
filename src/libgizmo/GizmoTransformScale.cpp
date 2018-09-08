@@ -286,7 +286,8 @@ void CGizmoTransformScale::Draw()
         axeZ*=GetScreenFactor();
 
 
-        const float tfct2 = 0.02f*GetScreenFactor(); // 0.83
+		//const float tfct2 = 0.02f*GetScreenFactor(); // 0.83
+		const float tfct2 = 0.83f;
 
         // plan1
         if (m_ScaleTypePredict != SCALE_X)
