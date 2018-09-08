@@ -241,17 +241,19 @@ void CGizmoTransformMove::Draw()
                 unitYColor(float(0x2e) / 255.0f, float(0xcc) / 255.0f, float(0x40) / 255.0f),
                 unitZColor(0.0f, float(0x74) / 255.0f, float(0xd9) / 255.0f);
 
+        const float tfct2 = 0.02f*GetScreenFactor(); // 0.83
+
         // plan1
-        if (m_MoveTypePredict != MOVE_X) DrawAxis(orig,axeX,axeY,axeZ,0.05f,0.83f,unitXColor);
-            else DrawAxis(orig,axeX,axeY,axeZ, 0.05f,0.83f,selectedColor);
+        if (m_MoveTypePredict != MOVE_X) DrawAxis(orig,axeX,axeY,axeZ,0.05f,tfct2,unitXColor);
+            else DrawAxis(orig,axeX,axeY,axeZ, 0.05f,tfct2,selectedColor);
 
         //plan2
-        if (m_MoveTypePredict != MOVE_Y) DrawAxis(orig,axeY,axeX,axeZ, 0.05f,0.83f,unitYColor);
-            else DrawAxis(orig,axeY,axeX,axeZ, 0.05f,0.83f,selectedColor);
+        if (m_MoveTypePredict != MOVE_Y) DrawAxis(orig,axeY,axeX,axeZ, 0.05f,tfct2,unitYColor);
+            else DrawAxis(orig,axeY,axeX,axeZ, 0.05f,tfct2,selectedColor);
 
         //plan3
-        if (m_MoveTypePredict != MOVE_Z) DrawAxis(orig,axeZ,axeX,axeY, 0.05f,0.83f,unitZColor);
-            else DrawAxis(orig,axeZ,axeX,axeY, 0.05f,0.83f,selectedColor);
+        if (m_MoveTypePredict != MOVE_Z) DrawAxis(orig,axeZ,axeX,axeY, 0.05f,tfct2,unitZColor);
+            else DrawAxis(orig,axeZ,axeX,axeY, 0.05f,tfct2,selectedColor);
 
         EndDraw();
     }
