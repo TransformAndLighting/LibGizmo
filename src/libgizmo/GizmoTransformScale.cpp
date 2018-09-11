@@ -178,37 +178,73 @@ void CGizmoTransformScale::OnMouseMove(unsigned int x, unsigned int y)
         }
         else
         {
-            int difx = x - m_LockX;
-            int dify = y - m_LockY;
+                int difx = x - m_LockX;
+                int dify = y - m_LockY;
 
-            float len = sqrtf( (float)(difx*difx) + (float)(dify*dify) );
+                // modification start ////////////////////////////////////////////////////
 
-            float lng2 = len /100.f;
-            /*
-            float lng2 = ( df.Dot(m_LockVertex));
-            char tmps[512];
-            sprintf(tmps, "%5.4f\n", lng2 );
-            OutputDebugStringA( tmps );
+                // original code...
+                //float len = sqrtf( (float)(difx*difx) + (float)(dify*dify) );
+                //float lng2 = len /100.f;
 
+                // get location of object in screen space
+                tmatrix viewproj = m_Model * m_Proj;
+                tvector3 trans = m_pMatrix->GetTranslation();
+                tvector4 wpos = vector4(trans.x, trans.y, trans.z, 1.f);
+                wpos.Transform(viewproj);
+                tvector2 spos(wpos.x/wpos.w, -(wpos.y/wpos.w));
+                if(wpos.z < 0)
+                    return;
+                tvector2 screenPos(0,0);
+                tvector2 screenSize((float)mScreenWidth, (float)mScreenHeight);
+                tvector2 pos(screenPos.x + (1.f + spos.x)*(screenSize.x * .5f), (screenPos.y + (1.f + spos.y)*(screenSize.y * .5f)));
 
-            if (lng2 < 1.f)
-            {
-                if ( lng2<= 0.001f )
-                    lng2 = 0.001f;
+                // compare clicked pos and object pos to choose between x or y axis
+                // and determine which direction is positive or negative
+                float lng2;
+                float distx = abs(m_LockX - pos.x);
+                float disty = abs(m_LockY - pos.y);
+                if(distx >= disty)
+                {
+                    if(m_LockX < pos.x)
+                        lng2 = 1.0f - ( float(difx) / 100.0f);
+                    else
+                        lng2 = 1.0f + ( float(difx) / 100.0f);
+                }
                 else
                 {
-                    //lng2+=4.f;
-                    lng2/=5.f;
+                    if(m_LockY < pos.y)
+                        lng2 = 1.0f - ( float(dify) / 100.0f);
+                    else
+                        lng2 = 1.0f + ( float(dify) / 100.0f);
                 }
-            }
-            else
-            {
-                int a = 1;
-            }
-            */
-            SnapScale(lng2);
-            scVect *= lng2;
-            scVect += scVect2;
+                // modification end //////////////////////////////////////////////////////
+
+                /*
+                float lng2 = ( df.Dot(m_LockVertex));
+                char tmps[512];
+                sprintf(tmps, "%5.4f\n", lng2 );
+                OutputDebugStringA( tmps );
+
+
+                if (lng2 < 1.f)
+                {
+                    if ( lng2<= 0.001f )
+                        lng2 = 0.001f;
+                    else
+                    {
+                        //lng2+=4.f;
+                        lng2/=5.f;
+                    }
+                }
+                else
+                {
+                    int a = 1;
+                }
+                */
+                SnapScale(lng2);
+                scVect *= lng2;
+                scVect += scVect2;
         }
 
 
