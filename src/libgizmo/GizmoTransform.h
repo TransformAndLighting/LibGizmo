@@ -34,6 +34,10 @@
 
 #include "stdafx.h"
 
+extern float zubbiX;
+extern float zubbiY;
+extern float zubbiZ;
+
 class CGizmoTransform : public IGizmo , protected CGizmoTransformRender
 {
 public:
@@ -49,7 +53,8 @@ public:
           mEditQT(0),
           mMask(AXIS_ALL),
           mScreenWidth(1),
-          mScreenHeight(1)
+          mScreenHeight(1),
+          mRayScale(1.0f, 1.0f, 1.0f)
     {
     }
     ~CGizmoTransform()
@@ -65,7 +70,15 @@ public:
         mEditQT = NULL;
     }
     virtual void SetDisplayScale( float aScale ) { mDisplayScale = aScale; }
-    virtual void SetScreenDimension( int screenWidth, int screenHeight)
+
+	virtual void SetRayScale(float x, float y, float z)
+	{
+		mRayScale.x = x;
+		mRayScale.y = y;
+		mRayScale.z = z;
+	}
+
+	virtual void SetScreenDimension( int screenWidth, int screenHeight)
     {
         mScreenWidth = screenWidth;
         mScreenHeight = screenHeight;
@@ -165,7 +178,8 @@ public:
         m_plan.RayInter(inters,rayOrigin,rayDir);
         df.TransformPoint( inters, mt );
 
-        df /=GetScreenFactor();
+        df /= GetScreenFactor();
+		df *= mRayScale;
         m_LockVertex = df;
         if (lockVTNorm)
         {
@@ -231,6 +245,8 @@ protected:
     }
 
     int mScreenWidth, mScreenHeight;
+
+	tvector3 mRayScale;
 };
 
 #endif // !defined(AFX_GIZMOTRANSFORM_H__913D353E_E420_4B1C_95F3_5A0258161651__INCLUDED_)

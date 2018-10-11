@@ -57,7 +57,8 @@ public:
 
     virtual void SetCameraMatrix(const float *Model, const float *Proj) = 0;
     virtual void SetScreenDimension( int screenWidth, int screenHeight) = 0;
-    virtual void SetDisplayScale( float aScale ) = 0;
+	virtual void SetDisplayScale( float aScale ) = 0;
+	virtual void SetRayScale( float x, float y, float z ) = 0;
 
     // return true if gizmo transform capture mouse
     virtual bool OnMouseDown(unsigned int x, unsigned int y) = 0;
